@@ -20,6 +20,8 @@ public class CityCsvConverter {
                 .codeInsee(line[mapper.get("code_insee")])
                 .population(Integer.parseInt(line[mapper.get("population")]))
                 .area(Integer.parseInt(line[mapper.get("superficie_km2")]))
+                .departmentCode(line[mapper.get("dep_code")])
+                .averageAltitude(Integer.parseInt(line[mapper.get("altitude_moyenne")]))
                 .build();
     }
 }

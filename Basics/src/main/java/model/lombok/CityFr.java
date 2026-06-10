@@ -22,4 +22,8 @@ public class CityFr {
     private int population;
 
     private int area;
+
+    private String departmentCode;
+
+    private int averageAltitude;
 }
