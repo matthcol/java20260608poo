@@ -10,13 +10,57 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 public class CsvTools {
+
+    /**
+     * Read headers from a CSV file
+     * @param filename source file with a CSV format
+     * @param separator separator
+     * @param quotechar quotechar protecting information containing the separator
+     * @param charset charset of the CSV file
+     * @return headers
+     * @throws CsvParseStreamException when an IOException or CsvParseException happens internally
+     */
+    public static String[] headers(
+            String filename,
+            char separator,
+            char quotechar,
+            Charset charset
+    ) {
+        var is = CsvTools.class.getResourceAsStream(filename);
+        if (is == null) throw new CsvParseStreamException(new IOException("Resource not found: " + filename));
+        try (
+                Reader reader = new InputStreamReader(is, charset);
+                CSVReader csvReader = new CSVReaderBuilder(reader)
+                        .withCSVParser(
+                                new CSVParserBuilder()
+                                        .withSeparator(separator)
+                                        .withQuoteChar(quotechar)
+                                        .build()
+                        )
+                        .build();
+        ) {
+            return csvReader.iterator().next();
+        } catch (IOException | NoSuchElementException e) {
+            throw new CsvParseStreamException(e);
+        }
+    }
+
+    /**
+     * Read headers from a CSV file
+     * @param filename source file with a CSV format
+     * @return headers
+     * @throws CsvParseStreamException when an IOException or CsvParseException happens internally
+     */
+    public static String[] headers(
+            String filename
+    ) {
+        return headers(filename, ',', '"', StandardCharsets.UTF_8);
+    }
 
     /**
      * Read a CSV file
