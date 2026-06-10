@@ -33,4 +33,6 @@ build/
 .DS_Store
 
 ### Data
+### Sources:
+### - https://www.data.gouv.fr/datasets/communes-et-villes-de-france-en-csv-excel-json-parquet-et-feather
 src/test/resources/*.csv
