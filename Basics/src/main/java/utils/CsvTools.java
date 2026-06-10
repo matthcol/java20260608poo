@@ -16,6 +16,14 @@ import java.util.stream.StreamSupport;
 
 public class CsvTools {
 
+    public static Map<String, Integer> headersToMapper(String[] headers){
+        Map<String, Integer> mapper = new TreeMap<>();
+        for (int i = 0; i < headers.length; i++) {
+            mapper.put(headers[i], i);
+        }
+        return mapper;
+    }
+
     /**
      * Read headers from a CSV file
      * @param filename source file with a CSV format
