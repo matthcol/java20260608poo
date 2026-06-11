@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import utils.CsvTools;
 import utils.converter.CityCsvConverter;
 
+import java.text.Collator;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -318,6 +319,29 @@ public class DemoStreamCity {
         });
     }
 
+    @Test
+    void demoPreSortCity(){
+        // once
+        var citySortedByPopDescNameCodeInsee = cityList.stream()
+                .sorted(
+                        Comparator.comparing(CityFr::getPopulation, Comparator.reverseOrder())
+                                .thenComparing(CityFr::getName, Collator.getInstance(Locale.FRENCH))
+                                .thenComparing(CityFr::getCodeInsee)
+                ).toList();
 
+        // queries
+        System.out.println("**** Query 1 : Top 10 cities by population *****");
+        citySortedByPopDescNameCodeInsee.stream()
+                .limit(10)
+                .forEach(System.out::println);
+
+        System.out.println();
+        System.out.println("**** Query 2 : cities with 10K+ population and 1K+ altitude  *****");
+        citySortedByPopDescNameCodeInsee.stream()
+                .filter(cityFr -> cityFr.getPopulation() >= 10_000)
+                .filter(cityFr -> cityFr.getAverageAltitude() >= 1_000)
+                .forEach(System.out::println);
+
+    }
 
 }

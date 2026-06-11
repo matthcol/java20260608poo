@@ -15,4 +15,5 @@ public class CsvParseStreamException extends RuntimeException {
     public CsvParseStreamException(Throwable cause) {
         super(cause);
     }
+
 }
