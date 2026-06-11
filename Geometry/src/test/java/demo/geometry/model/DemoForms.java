@@ -151,6 +151,31 @@ public class DemoForms {
         polygonDefault.setVertices(List.of(new Point(), new Point(), new Point()));
         violations = validator.validate(polygonDefault);
         Assertions.assertTrue(violations.isEmpty());
+
+        //
+        Point p1 = new Point("A", 1, 1);
+        Point p2 = new Point("B", 4, 1);
+        Point p3 = new Point("C", 4, 5);
+        Point p4 = new Point("D", 1, 4);
+        Polygon triangle = new Polygon("ABC", List.of(p1, p2, p3));
+        Polygon rectangle = Polygon.of("ABCD", p1, p2, p3, p4);
+        System.out.println(triangle);
+        System.out.println(rectangle);
+
+        System.out.println("Rectangle vertices");
+        for (Point vertex: rectangle){
+            System.out.println(" - " + vertex);
+        }
+
+        System.out.println();
+        rectangle.forEachVertex(System.out::println);
+
+        double minX = rectangle.streamVertex()
+                .mapToDouble(Point::getX)
+                .min()
+                .orElseThrow(); // should not happen
+        System.out.println();
+        System.out.println("Min X: " + minX);
     }
 
 }

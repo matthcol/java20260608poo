@@ -1,11 +1,13 @@
 package geometry.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public abstract class Form {
+    // @NotBlank
     private String name;
 
     protected Form() {
