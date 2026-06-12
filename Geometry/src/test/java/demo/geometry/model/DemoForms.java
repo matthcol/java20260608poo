@@ -178,4 +178,27 @@ public class DemoForms {
         System.out.println("Min X: " + minX);
     }
 
+    @Test
+    void demoPatternMatchingSwitch(){
+        Point ptA = new Point("A", 1.0, 2.5);
+        WeightedPoint wpt = new WeightedPoint("W", 12.5, 20.75, 100.0);
+        Circle c = new Circle("C", ptA, 10.0);
+        Circle c2 = new Circle("C", ptA, 100.0);
+        Polygon triangle = new Polygon();
+        List<Form> forms = List.of(ptA, wpt, c, triangle, c2);
+        for (var form: forms){
+            System.out.println(form);
+            // Pattern matching Java 17-21
+            // https://docs.oracle.com/en/java/javase/21/language/sealed-classes-and-interfaces.html
+            // https://docs.oracle.com/en/java/javase/21/language/pattern-matching.html
+            switch (form) {
+                case WeightedPoint wp -> System.out.println("Weighted point with weight: " + wp.getWeight());
+                case Point point -> System.out.println("Point with x: " + point.getX());
+                case Mesurable2D m -> System.out.println("Mesurable 2D with area: " + m.area());
+                default -> System.out.println("Other form (future): " + form); // or close model (sealed)
+            }
+            System.out.println();
+        }
+    }
+
 }
